@@ -58,8 +58,46 @@
           </div>
         </div>
 
+        <div class="climate-card climate-card-07">
+          <div class="climate-card-header"><i class="iconfont icon-quanqiuqihou"></i>气温曲线图</div>
+
+          <div class="temperature-chart-grid">
+            <div class="temperature-chart-card">
+              <div class="temperature-chart-header">
+                <div class="temperature-chart-name-row">
+                  <span>热带季风气候</span>
+                  <em>Monsoon</em>
+                </div>
+                <strong>全年高温，气温年变化较小</strong>
+              </div>
+
+              <div class="temperature-chart-shell">
+                <div ref="monsoonTempChartRef" class="temperature-chart"></div>
+              </div>
+
+              <div class="temperature-chart-note">中南半岛许多地区全年气温较高，受季风影响主要表现为降水有明显旱雨季，气温曲线整体较平缓。</div>
+            </div>
+
+            <div class="temperature-chart-card">
+              <div class="temperature-chart-header">
+                <div class="temperature-chart-name-row">
+                  <span>热带雨林气候</span>
+                  <em>Rainforest</em>
+                </div>
+                <strong>全年高温，气温更稳定</strong>
+              </div>
+
+              <div class="temperature-chart-shell">
+                <div ref="rainforestTempChartRef" class="temperature-chart"></div>
+              </div>
+
+              <div class="temperature-chart-note">赤道附近太阳高度大，全年热量充足，月均温变化很小，常表现为终年高温。</div>
+            </div>
+          </div>
+        </div>
+
         <div class="climate-card climate-card-03">
-          <div class="climate-card-header"><i class="iconfont icon-jifeng"></i>季风影响</div>
+          <div class="climate-card-header"><i class="iconfont icon-feng"></i>季风影响</div>
 
           <p class="mb-8">
             东南亚受季风影响明显，季风风向随季节变化，带来降水季节差异。
@@ -100,6 +138,41 @@
           </div>
         </div>
 
+        <div class="climate-card climate-card-06">
+          <div class="climate-card-header"><i class="iconfont icon-diqiu"></i>气候成因与读图方法</div>
+
+          <div class="cause-grid">
+            <div class="cause-card">
+              <div class="cause-title">纬度因素</div>
+              <div class="cause-desc">东南亚大部分位于北回归线以南，靠近赤道，太阳辐射强，因此全年气温较高。</div>
+            </div>
+
+            <div class="cause-card">
+              <div class="cause-title">海陆因素</div>
+              <div class="cause-desc">周围海域广阔，水汽来源充足，降水条件好，湿热特征明显。</div>
+            </div>
+
+            <div class="cause-card">
+              <div class="cause-title">季风因素</div>
+              <div class="cause-desc">中南半岛受季风影响突出，降水具有季节变化，形成较明显的雨季和旱季。</div>
+            </div>
+
+            <div class="cause-card">
+              <div class="cause-title">赤道位置</div>
+              <div class="cause-desc">马来群岛多位于赤道附近，对流旺盛，终年高温多雨，热带雨林气候广布。</div>
+            </div>
+          </div>
+
+          <div class="read-map-box">
+            <div class="read-map-title">读图三步法</div>
+            <ol>
+              <li>先看赤道、北回归线，判断东南亚位于低纬热带。</li>
+              <li>再看气候类型，中南半岛以热带季风气候为主，马来群岛以热带雨林气候为主。</li>
+              <li>最后看夏季风、冬季风方向，解释雨季、旱季和降水差异。</li>
+            </ol>
+          </div>
+        </div>
+
         <div class="climate-card climate-card-05">
           <div class="climate-card-header"><i class="iconfont icon-kaoshi"></i>中考记忆点</div>
 
@@ -109,6 +182,8 @@
             <li><strong>三记特点：</strong>全年高温，降水丰富。</li>
             <li><strong>四记分布：</strong>中南半岛季风气候明显，马来群岛雨林气候广布。</li>
             <li><strong>五记农业：</strong>湿热气候适合水稻和热带经济作物生长。</li>
+            <li><strong>六记分区：</strong>半岛多季风，群岛多雨林。</li>
+            <li><strong>七记成因：</strong>低纬高温、临海多雨、季风显著。</li>
           </ul>
         </div>
       </div>
@@ -155,6 +230,11 @@
             <div class="legend-title">图例</div>
 
             <div class="legend-row">
+              <span class="legend-area gaoyuan-area"></span>
+              <span>高原山地气候</span>
+            </div>
+
+            <div class="legend-row">
               <span class="legend-area rainforest-area"></span>
               <span>热带雨林气候</span>
             </div>
@@ -182,7 +262,7 @@
 
           <div class="map-note">
             <div class="map-note-title">读图提示</div>
-            <div>观察气候类型与降水分布，可理解东南亚水稻和热带作物分布的自然基础。</div>
+            <div>先看赤道与北回归线判断热带位置，再对比气候类型、七月降水与季风方向，理解东南亚“湿热”和“旱雨季”的形成。</div>
           </div>
         </div>
       </div>
@@ -192,8 +272,10 @@
 
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref } from 'vue'
+import * as echarts from 'echarts'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { GEOJSON_MAP, TILE_MAP } from '@/resource'
 
 defineProps<{
   current: {
@@ -221,6 +303,12 @@ type LineItem = {
   arrowSize?: number
 }
 
+type TemperatureClimateItem = {
+  name: string
+  subtitle: string
+  values: number[]
+}
+
 let map: L.Map | null = null
 let baseLayer: L.TileLayer | null = null
 let labelPane: HTMLDivElement | null = null
@@ -230,8 +318,6 @@ let climateLayer: L.GeoJSON | null = null
 let rainLayer: L.GeoJSON | null = null
 let climateAbortController: AbortController | null = null
 let rainAbortController: AbortController | null = null
-
-const baseGeoUrl = 'https://course-code.oss-cn-shanghai.aliyuncs.com/geojson/'
 
 const centerLat = 6
 const centerLng = 108
@@ -243,6 +329,25 @@ const showRainLayer = ref(false)
 const showSummerMonsoonLines = ref(false)
 const showWinterMonsoonLines = ref(false)
 const showTropicLines = ref(true)
+
+const monsoonTempChartRef = ref<HTMLDivElement | null>(null)
+const rainforestTempChartRef = ref<HTMLDivElement | null>(null)
+let monsoonTempChart: echarts.ECharts | null = null
+let rainforestTempChart: echarts.ECharts | null = null
+
+const temperatureMonths = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+
+const monsoonTemperatureData: TemperatureClimateItem = {
+  name: '热带季风气候',
+  subtitle: '全年高温，旱雨季明显',
+  values: [24, 25, 27, 29, 30, 29, 28, 28, 28, 27, 26, 25],
+}
+
+const rainforestTemperatureData: TemperatureClimateItem = {
+  name: '热带雨林气候',
+  subtitle: '全年高温，温差很小',
+  values: [26, 26, 27, 27, 27, 27, 26, 26, 26, 27, 27, 27],
+}
 
 const summerMonsoonLayer = L.layerGroup()
 const winterMonsoonLayer = L.layerGroup()
@@ -517,6 +622,133 @@ const tropicLines: LineItem[] = [
   },
 ]
 
+function buildTemperatureChartOption(item: TemperatureClimateItem): echarts.EChartsOption {
+  return {
+    animation: true,
+    animationDuration: 650,
+    grid: {
+      top: 20,
+      left: 38,
+      right: 12,
+      bottom: 28,
+      containLabel: true,
+    },
+    tooltip: {
+      trigger: 'axis',
+      formatter: params => {
+        const first = Array.isArray(params) ? params[0] : params
+        const month = first?.name ?? ''
+        const value = first?.data ?? ''
+        return `气温：${value}℃`
+      },
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: temperatureMonths,
+      axisTick: {
+        alignWithLabel: true,
+      },
+      axisLine: {
+        lineStyle: {
+          color: '#94a3b8',
+        },
+      },
+      axisLabel: {
+        color: '#475569',
+        fontSize: 10,
+        interval: 0,
+        formatter: (value: string, index: number) => {
+          return index % 3 === 0 ? value : ''
+        },
+      },
+    },
+    yAxis: {
+      type: 'value',
+      name: '气温/℃',
+      min: 20,
+      max: 32,
+      interval: 2,
+      nameTextStyle: {
+        color: '#475569',
+        fontSize: 11,
+        padding: [0, 0, 4, 0],
+      },
+      axisLabel: {
+        color: '#475569',
+        fontSize: 10,
+        formatter: '{value}',
+      },
+      splitLine: {
+        lineStyle: {
+          color: '#e2e8f0',
+          type: 'dashed',
+        },
+      },
+    },
+    series: [
+      {
+        name: '气温',
+        type: 'line',
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 6,
+        data: item.values,
+        lineStyle: {
+          width: 3,
+          color: '#ef4444',
+        },
+        itemStyle: {
+          color: '#ef4444',
+          borderColor: '#ffffff',
+          borderWidth: 1.5,
+        },
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(239, 68, 68, 0.22)' },
+              { offset: 1, color: 'rgba(239, 68, 68, 0.02)' },
+            ],
+          },
+        },
+      },
+    ],
+  }
+}
+
+function initTemperatureCharts() {
+  if (monsoonTempChartRef.value) {
+    monsoonTempChart = echarts.init(monsoonTempChartRef.value)
+    monsoonTempChart.setOption(buildTemperatureChartOption(monsoonTemperatureData))
+  }
+
+  if (rainforestTempChartRef.value) {
+    rainforestTempChart = echarts.init(rainforestTempChartRef.value)
+    rainforestTempChart.setOption(buildTemperatureChartOption(rainforestTemperatureData))
+  }
+
+  requestAnimationFrame(() => {
+    resizeTemperatureCharts()
+  })
+}
+
+function resizeTemperatureCharts() {
+  monsoonTempChart?.resize()
+  rainforestTempChart?.resize()
+}
+
+function disposeTemperatureCharts() {
+  monsoonTempChart?.dispose()
+  rainforestTempChart?.dispose()
+  monsoonTempChart = null
+  rainforestTempChart = null
+}
+
 function switchBaseLayer() {
   if (!map) return
 
@@ -525,14 +757,12 @@ function switchBaseLayer() {
     baseLayer = null
   }
 
-  const url = useGoogle.value
-    ? 'https://zdys.szjx.ai-study.net/geo-resources-folder/tiles/google-tiles/{z}/{x}/{y}.png'
-    : 'https://zdys.szjx.ai-study.net/geo-resources-folder/tiles/osm-tiles/{z}/{x}/{y}.png'
+  const url = useGoogle.value ? TILE_MAP.google : TILE_MAP.osm
 
-  baseLayer = L.tileLayer(url, {
+  baseLayer = L.tileLayer(url!, {
     attribution: '',
     minZoom: 2,
-    maxZoom: 8,
+    maxZoom: 5,
   }).addTo(map)
 
   scheduleUpdateLabels()
@@ -682,13 +912,11 @@ async function loadClimateLayer() {
   climateAbortController = abortController
 
   try {
-    const response = await fetch(baseGeoUrl + '东南亚气候类型.geojson', {
-      signal: abortController.signal,
+    const data = await new Promise<GeoJSON.FeatureCollection<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>>(resolve => {
+      setTimeout(() => {
+        resolve(GEOJSON_MAP['东南亚气候类型'] || GEOJSON_MAP['东南亚气候类型.geojson']!)
+      }, 300)
     })
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
-
-    const data = await response.json()
 
     if (abortController.signal.aborted || !map || !showClimateLayer.value) return
 
@@ -737,13 +965,11 @@ async function loadRainLayer() {
   rainAbortController = abortController
 
   try {
-    const response = await fetch(baseGeoUrl + '东南亚七月降水量分布.geojson', {
-      signal: abortController.signal,
+    const data = await new Promise<GeoJSON.FeatureCollection<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>>(resolve => {
+      setTimeout(() => {
+        resolve(GEOJSON_MAP['东南亚七月降水量分布'] || GEOJSON_MAP['东南亚七月降水量分布.geojson']!)
+      }, 300)
     })
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
-
-    const data = await response.json()
 
     if (abortController.signal.aborted || !map || !showRainLayer.value) return
 
@@ -991,7 +1217,7 @@ onMounted(async () => {
     zoomControl: true,
     attributionControl: false,
     minZoom: 2,
-    maxZoom: 8,
+    maxZoom: 5,
     dragging: true,
     scrollWheelZoom: true,
     zoomAnimation: false,
@@ -1004,6 +1230,10 @@ onMounted(async () => {
   bindMapLabelEvents()
   refreshMapLayers()
 
+  await nextTick()
+  initTemperatureCharts()
+  window.addEventListener('resize', resizeTemperatureCharts)
+
   if (showClimateLayer.value) {
     loadClimateLayer()
   }
@@ -1013,6 +1243,7 @@ onMounted(async () => {
   requestAnimationFrame(() => {
     map?.invalidateSize(false)
     scheduleUpdateLabels()
+    resizeTemperatureCharts()
   })
 })
 
@@ -1021,6 +1252,9 @@ onUnmounted(() => {
     cancelAnimationFrame(updateLabelRaf)
     updateLabelRaf = 0
   }
+
+  window.removeEventListener('resize', resizeTemperatureCharts)
+  disposeTemperatureCharts()
 
   unbindMapLabelEvents()
   cleanupMapLayers()
@@ -1355,13 +1589,18 @@ onUnmounted(() => {
   flex-shrink: 0;
 }
 
+.gaoyuan-area {
+  background: rgba(127, 109, 150, 0.7);
+  border: 1px solid rgba(127, 109, 102, 0.7);
+}
+
 .rainforest-area {
-  background: rgba(34, 197, 94, 0.42);
+  background: rgba(88, 157, 94, 0.7);
   border: 1px solid #16a34a;
 }
 
 .monsoon-area {
-  background: rgba(132, 204, 22, 0.38);
+  background: rgba(183, 226, 135, 0.7);
   border: 1px solid #65a30d;
 }
 
@@ -1517,5 +1756,200 @@ onUnmounted(() => {
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
+}
+
+.climate-card-06 {
+  background: #eefcf8;
+  border-color: rgba(45, 212, 191, 0.32);
+}
+
+.climate-card-06 .climate-card-header {
+  color: #0f766e;
+}
+
+.climate-card-06 .iconfont {
+  color: #0f766e;
+}
+
+.cause-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.cause-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid rgba(20, 184, 166, 0.26);
+}
+
+.cause-title {
+  font-weight: bold;
+  color: #0f766e;
+  margin-bottom: 4px;
+}
+
+.cause-desc {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.read-map-box {
+  margin-top: 10px;
+  padding: 9px 10px;
+  background: #fff;
+  border-radius: 8px;
+  border-left: 3px solid #14b8a6;
+}
+
+.read-map-title {
+  font-weight: bold;
+  color: #0f766e;
+  margin-bottom: 6px;
+}
+
+.read-map-box ol {
+  margin: 0;
+  padding-left: 18px;
+  color: #475569;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.read-map-box li {
+  margin-bottom: 4px;
+}
+
+.read-map-box li:last-child {
+  margin-bottom: 0;
+}
+
+.climate-card-07 {
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+
+.climate-card-07 .climate-card-header {
+  color: #c2410c;
+}
+
+.climate-card-07 .iconfont {
+  color: #c2410c;
+}
+
+.temperature-chart-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  min-width: 0;
+}
+
+.temperature-chart-card {
+  min-width: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid rgba(249, 115, 22, 0.22);
+  box-shadow: 0 1px 4px rgba(15, 39, 72, 0.06);
+  overflow: hidden;
+}
+
+.temperature-chart-header {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.temperature-chart-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.temperature-chart-name-row span {
+  min-width: 0;
+  color: #c2410c;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 1.25;
+  white-space: normal;
+  word-break: keep-all;
+}
+
+.temperature-chart-name-row em {
+  flex-shrink: 0;
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 800;
+  color: #ea580c;
+  background: #ffedd5;
+  border: 1px solid #fed7aa;
+  border-radius: 999px;
+  padding: 2px 7px;
+}
+
+.temperature-chart-header strong {
+  display: block;
+  width: 100%;
+  color: #7c2d12;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+  background: #fff7ed;
+  border-left: 3px solid #f97316;
+  border-radius: 7px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  white-space: normal;
+}
+
+.temperature-chart-shell {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #fffaf5 100%);
+}
+
+.temperature-chart {
+  width: 100%;
+  min-width: 0;
+  height: 190px;
+}
+
+.temperature-chart-note {
+  margin-top: 8px;
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: #fff7ed;
+  border-left: 3px solid #f97316;
+  color: #475569;
+  font-size: 12px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+/* 左侧窄屏 / 面板压缩时进一步降低图表高度与文字占用 */
+@media (max-width: 1280px) {
+  .temperature-chart-card {
+    padding: 10px;
+  }
+
+  .temperature-chart-name-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .temperature-chart {
+    height: 176px;
+  }
 }
 </style>

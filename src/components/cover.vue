@@ -85,9 +85,7 @@
   height: 100%;
   overflow: hidden;
   padding: clamp(28px, 4.2vw, 56px);
-  background:
-    linear-gradient(135deg, rgba(6, 78, 59, 0.92), rgba(15, 118, 110, 0.7)),
-    url('https://course-code.oss-cn-shanghai.aliyuncs.com/image/东南亚封面.png');
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.92), rgba(15, 118, 110, 0.7)), url('/image/东南亚封面.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -97,9 +95,9 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 76% 28%, rgba(45, 212, 191, 0.28), transparent 30%),
-    radial-gradient(circle at 16% 78%, rgba(16, 185, 129, 0.24), transparent 32%),
-    linear-gradient(90deg, rgba(5, 46, 22, 0.92) 0%, rgba(6, 78, 59, 0.78) 42%, rgba(15, 118, 110, 0.42) 72%, rgba(15, 118, 110, 0.18) 100%);
+    radial-gradient(circle at 76% 28%, rgba(45, 212, 190, 0.13), transparent 30%),
+    radial-gradient(circle at 16% 78%, rgba(16, 185, 129, 0.075), transparent 32%),
+    linear-gradient(90deg, rgba(5, 46, 22, 0.92) 0%, rgba(6, 78, 59, 0.452) 42%, rgba(15, 118, 109, 0.24) 72%, rgba(15, 118, 110, 0.18) 100%);
   z-index: 1;
 }
 

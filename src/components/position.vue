@@ -10,7 +10,7 @@
       <!-- 左侧内容区 -->
       <div class="position-content-left">
         <div class="position-card position-card-01">
-          <div class="position-card-header"><i class="iconfont icon-diliweizhi"></i>位置总体特征</div>
+          <div class="position-card-header"><i class="iconfont icon-diqiu"></i>位置总体特征</div>
 
           <p class="mb-8">
             东南亚位于亚洲东南部，地处<strong>亚洲与大洋洲、太平洋与印度洋</strong>之间，
@@ -41,7 +41,7 @@
         </div>
 
         <div class="position-card position-card-02">
-          <div class="position-card-header"><i class="iconfont icon-fanwei"></i>范围识记</div>
+          <div class="position-card-header"><i class="iconfont icon-quyuxinxi"></i>范围识记</div>
 
           <div class="rule-item">
             <div class="rule-title">组成范围</div>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="position-card position-card-03">
-          <div class="position-card-header"><i class="iconfont icon-haiyang"></i>濒临海洋与交通位置</div>
+          <div class="position-card-header"><i class="iconfont icon-anchor-full"></i>濒临海洋与交通位置</div>
 
           <div class="sea-grid">
             <div class="sea-card">
@@ -94,8 +94,52 @@
           </div>
         </div>
 
+        <div class="position-card position-card-04">
+          <div class="position-card-header"><i class="iconfont icon-fenbu"></i>位置对区域发展的影响</div>
+
+          <p class="mb-8">
+            东南亚的位置不仅决定了它的自然环境，也深刻影响了交通、农业、城市、贸易和区域合作。
+            分析位置时不要只说“在哪里”，还要说明<strong>这种位置带来了什么影响</strong>。
+          </p>
+
+          <div class="factor-row">
+            <div class="factor-label">交通</div>
+            <div class="factor-bar">
+              <div class="factor-fill traffic-fill"></div>
+            </div>
+            <div class="factor-text">两洲两洋之间的位置，使东南亚成为印度洋与太平洋之间的重要海上通道。</div>
+          </div>
+
+          <div class="factor-row">
+            <div class="factor-label">气候</div>
+            <div class="factor-bar">
+              <div class="factor-fill climate-fill"></div>
+            </div>
+            <div class="factor-text">低纬度位置使东南亚热量充足，热带季风气候和热带雨林气候分布广。</div>
+          </div>
+
+          <div class="factor-row">
+            <div class="factor-label">农业</div>
+            <div class="factor-bar">
+              <div class="factor-fill agriculture-fill"></div>
+            </div>
+            <div class="factor-text">高温多雨的气候有利于水稻和天然橡胶、油棕、椰子、蕉麻等热带作物生长。</div>
+          </div>
+
+          <div class="factor-row">
+            <div class="factor-label">合作</div>
+            <div class="factor-bar">
+              <div class="factor-fill relation-fill"></div>
+            </div>
+            <div class="factor-text">中国与东南亚陆海相邻，贸易、旅游、产业和交通合作基础较好。</div>
+          </div>
+
+          <div class="chart-tip">注：上图为课堂理解示意，用于说明位置因素对区域发展的影响。</div>
+        </div>
         <div class="position-card position-card-05">
           <div class="position-card-header"><i class="iconfont icon-kaoshi"></i>中考记忆点</div>
+
+          <div class="location-formula">北接中国，南近澳洲；东临太平洋，西通印度洋；半岛连大陆，群岛跨赤道；马六甲海峡，沟通两大洋。</div>
 
           <ul class="exam-list">
             <li><strong>一记方位：</strong>东南亚位于亚洲东南部。</li>
@@ -127,6 +171,26 @@
           </label>
 
           <label>
+            <input type="checkbox" v-model="showCountries" @change="toggleCountryLayer" />
+            东南亚主要国家
+          </label>
+
+          <label>
+            <input type="checkbox" v-model="showRegions" @change="refreshMapLayers" />
+            组成范围
+          </label>
+
+          <label>
+            <input type="checkbox" v-model="showLatitudeLines" @change="refreshMapLayers" />
+            重要纬线
+          </label>
+
+          <label>
+            <input type="checkbox" v-model="showCrossroad" @change="refreshMapLayers" />
+            东方十字路口
+          </label>
+
+          <label>
             <input type="checkbox" v-model="showSeaAreas" @change="refreshMapLayers" />
             重要海域
           </label>
@@ -145,6 +209,26 @@
             </div>
 
             <div class="legend-row">
+              <span class="legend-area country-area"></span>
+              <span>东南亚主要国家</span>
+            </div>
+
+            <div class="legend-row">
+              <span class="legend-area region-area"></span>
+              <span>中南半岛 / 马来群岛</span>
+            </div>
+
+            <div class="legend-row">
+              <span class="legend-line latitude-line"></span>
+              <span>赤道 / 北回归线</span>
+            </div>
+
+            <div class="legend-row">
+              <span class="legend-area crossroad-area"></span>
+              <span>东方十字路口</span>
+            </div>
+
+            <div class="legend-row">
               <span class="legend-area sea-area"></span>
               <span>重要海域</span>
             </div>
@@ -155,6 +239,17 @@
             </div>
           </div>
         </div>
+        <div class="focus-card" v-if="activeMapInfo">
+          <div class="focus-title">{{ activeMapInfo.name }}</div>
+          <div class="focus-type">{{ activeMapInfo.type }}</div>
+          <div class="focus-desc">{{ activeMapInfo.desc }}</div>
+        </div>
+
+        <div class="focus-card focus-card-empty" v-else>
+          <div class="focus-title">地图互动提示</div>
+          <div class="focus-type">点击地图要素查看说明</div>
+          <div class="focus-desc">可点击中南半岛、马来群岛、重要海域、赤道、北回归线、马六甲海峡等图层，左下角会显示对应知识点。</div>
+        </div>
       </div>
     </div>
   </div>
@@ -164,6 +259,7 @@
 import { nextTick, onMounted, onUnmounted, ref } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { GEOJSON_MAP, TILE_MAP } from '@/resource'
 
 defineProps<{
   current: {
@@ -198,6 +294,12 @@ type LineItem = {
   dashArray?: string
 }
 
+type MapInfoItem = {
+  name: string
+  type: string
+  desc: string
+}
+
 let map: L.Map | null = null
 let baseLayer: L.TileLayer | null = null
 let labelPane: HTMLDivElement | null = null
@@ -208,8 +310,6 @@ let countryLayer: L.GeoJSON | null = null
 let boundaryAbortController: AbortController | null = null
 let countryAbortController: AbortController | null = null
 
-const baseGeoUrl = 'https://course-code.oss-cn-shanghai.aliyuncs.com/geojson/'
-
 const centerLat = 6
 const centerLng = 108
 const zoomLevel = 4
@@ -219,13 +319,88 @@ const showBoundary = ref(false)
 const showCountries = ref(false)
 const showSeaAreas = ref(true)
 const showStrait = ref(true)
+const showRegions = ref(true)
+const showLatitudeLines = ref(true)
+const showCrossroad = ref(true)
+const activeMapInfo = ref<MapInfoItem | null>(null)
 
 const seaAreaLayer = L.layerGroup()
 const straitLayer = L.layerGroup()
+const regionLayer = L.layerGroup()
+const latitudeLineLayer = L.layerGroup()
+const crossroadLayer = L.layerGroup()
 
 const seaAreaLabels: DomLabel[] = []
 const straitLabels: DomLabel[] = []
 const geoJsonLabels: DomLabel[] = []
+const regionLabels: DomLabel[] = []
+const latitudeLineLabels: DomLabel[] = []
+const crossroadLabels: DomLabel[] = []
+
+const regionAreas: AreaItem[] = [
+  {
+    name: '中南半岛',
+    lat: 15.5,
+    lng: 103.5,
+    radius: 760000,
+    desc: '东南亚的大陆部分，位于中国以南，与我国山水相连，主要包括越南、老挝、柬埔寨、泰国、缅甸等国家。',
+    offsetX: 0,
+    offsetY: -10,
+  },
+  {
+    name: '马来群岛',
+    lat: -1.5,
+    lng: 116,
+    radius: 1180000,
+    desc: '东南亚的岛屿部分，位于中南半岛东南方，岛屿众多，主要包括印度尼西亚、菲律宾、马来西亚、文莱、东帝汶等。',
+    offsetX: 0,
+    offsetY: -10,
+  },
+]
+
+const latitudeLines: LineItem[] = [
+  {
+    name: '赤道',
+    path: [
+      [0, 88],
+      [0, 136],
+    ],
+    desc: '赤道穿过东南亚岛屿地区，说明东南亚大部分位于低纬热带。',
+    color: '#ef4444',
+    dashArray: '8 6',
+  },
+  {
+    name: '北回归线',
+    path: [
+      [23.5, 88],
+      [23.5, 136],
+    ],
+    desc: '北回归线经过东南亚北部附近，帮助判断东南亚主要处于低纬度、热带位置。',
+    color: '#9333ea',
+    dashArray: '8 6',
+  },
+]
+
+const crossroadAreas: AreaItem[] = [
+  {
+    name: '东方十字路口核心区',
+    lat: 4.5,
+    lng: 104.5,
+    radius: 1350000,
+    desc: '东南亚处于亚洲与大洋洲、太平洋与印度洋之间，是沟通两洲两洋的重要区域，海上航线密集。',
+    offsetX: 0,
+    offsetY: -10,
+  },
+  {
+    name: '海陆联系枢纽区',
+    lat: 11.5,
+    lng: 109.5,
+    radius: 760000,
+    desc: '中南半岛与南海、马来群岛相连，既有陆上联系，也有海上联系，是东亚通向东南亚的重要方向。',
+    offsetX: 0,
+    offsetY: -10,
+  },
+]
 
 const seaAreas: AreaItem[] = [
   {
@@ -255,13 +430,17 @@ const straitLines: LineItem[] = [
   {
     name: '马六甲海峡',
     path: [
-      [5.8, 95.2],
-      [4.9, 97.0],
-      [3.8, 99.0],
-      [2.6, 101.0],
-      [1.3, 103.5],
+      [1.2320506, 103.3028407],
+      [1.5724445, 102.753653],
+      [1.934738, 102.0726603],
+      [2.3518277, 101.6992127],
+      [2.7249082, 100.8973987],
+      [3.7776365, 99.8429583],
+      [4.161145, 99.5024619],
+      [4.5663649, 99.1180305],
+      [4.8290892, 98.8873717],
     ],
-    desc: '位于马来半岛和苏门答腊岛之间，连接印度洋和太平洋，是世界重要海上通道。',
+    desc: '东方十字路口，位于马来半岛和苏门答腊岛之间，连接印度洋和太平洋，是世界重要海上通道。',
     color: '#f97316',
   },
 ]
@@ -274,14 +453,12 @@ function switchBaseLayer() {
     baseLayer = null
   }
 
-  const url = useGoogle.value
-    ? 'https://zdys.szjx.ai-study.net/geo-resources-folder/tiles/google-tiles/{z}/{x}/{y}.png'
-    : 'https://zdys.szjx.ai-study.net/geo-resources-folder/tiles/osm-tiles/{z}/{x}/{y}.png'
+  const url = useGoogle.value ? TILE_MAP.google : TILE_MAP.osm
 
-  baseLayer = L.tileLayer(url, {
+  baseLayer = L.tileLayer(url!, {
     attribution: '',
     minZoom: 2,
-    maxZoom: 8,
+    maxZoom: 5,
   }).addTo(map)
 
   scheduleUpdateLabels()
@@ -340,6 +517,18 @@ function updateOneLabelPosition(label: DomLabel) {
 function updateAllLabelPositions() {
   updateLabelRaf = 0
 
+  if (showRegions.value) {
+    regionLabels.forEach(updateOneLabelPosition)
+  }
+
+  if (showLatitudeLines.value) {
+    latitudeLineLabels.forEach(updateOneLabelPosition)
+  }
+
+  if (showCrossroad.value) {
+    crossroadLabels.forEach(updateOneLabelPosition)
+  }
+
   if (showSeaAreas.value) {
     seaAreaLabels.forEach(updateOneLabelPosition)
   }
@@ -386,18 +575,21 @@ function clearDomLabels(labels: DomLabel[]) {
   labels.length = 0
 }
 
-function bindInfoPopup(layer: L.Layer, title: string, desc: string) {
-  if ('bindPopup' in layer && typeof layer.bindPopup === 'function') {
-    layer.bindPopup(`
-      <div style="min-width: 160px; line-height: 1.5;">
-        <div style="font-weight: bold; margin-bottom: 4px;">${escapeHtml(title)}</div>
-        <div style="font-size: 12px; color: #444;">${escapeHtml(desc)}</div>
-      </div>
-    `)
+function showMapInfo(title: string, desc: string, type = '地图要素') {
+  activeMapInfo.value = {
+    name: title,
+    type,
+    desc,
   }
 }
 
-async function loadGeoJsonLayer(options: { type: 'boundary' | 'country'; url: string }) {
+function bindInfoPopup(layer: L.Layer, title: string, desc: string, type = '地图要素') {
+  layer.on('click', () => {
+    showMapInfo(title, desc, type)
+  })
+}
+
+async function loadGeoJsonLayer(options: { type: 'boundary' | 'country' }) {
   if (!map) return
 
   const isBoundary = options.type === 'boundary'
@@ -413,15 +605,11 @@ async function loadGeoJsonLayer(options: { type: 'boundary' | 'country'; url: st
   const abortController = isBoundary ? boundaryAbortController! : countryAbortController!
 
   try {
-    const response = await fetch(options.url, {
-      signal: abortController.signal,
+    const data = await new Promise<GeoJSON.FeatureCollection<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>>((resolve, reject) => {
+      setTimeout(() => {
+        resolve(GEOJSON_MAP[options.type === 'boundary' ? '东南亚轮廓线' : '东南亚国家轮廓线']!)
+      }, 1000)
     })
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const data = await response.json()
 
     if (abortController.signal.aborted || !map) return
     if (isBoundary && !showBoundary.value) return
@@ -458,7 +646,7 @@ async function loadGeoJsonLayer(options: { type: 'boundary' | 'country'; url: st
         const name = props.name || props.NAME || props.Name || props.labelText || (isBoundary ? '东南亚轮廓线' : '东南亚主要国家')
         const desc = props.desc || props.description || (isBoundary ? '东南亚区域轮廓范围。' : '东南亚主要国家范围。')
 
-        bindInfoPopup(layer, name, desc)
+        bindInfoPopup(layer, name, desc, isBoundary ? '东南亚轮廓线' : '东南亚主要国家')
       },
     }).addTo(map)
 
@@ -600,7 +788,6 @@ function toggleBoundaryLayer() {
   if (showBoundary.value) {
     loadGeoJsonLayer({
       type: 'boundary',
-      url: baseGeoUrl + '东南亚轮廓线.geojson',
     })
   } else {
     clearBoundaryLayer()
@@ -611,7 +798,6 @@ function toggleCountryLayer() {
   if (showCountries.value) {
     loadGeoJsonLayer({
       type: 'country',
-      url: baseGeoUrl + '东南亚国家轮廓线.geojson',
     })
   } else {
     clearCountryLayer()
@@ -625,6 +811,7 @@ function addAreaLayer(
   labelClassName: string,
   color: string,
   fillOpacity = 0.14,
+  infoType = '范围区域',
 ) {
   if (!map) return
 
@@ -641,7 +828,7 @@ function addAreaLayer(
       opacity: 0.78,
     }).addTo(targetLayer)
 
-    bindInfoPopup(circle, item.name, item.desc)
+    bindInfoPopup(circle, item.name, item.desc, infoType)
 
     const label = createDomLabel({
       lat: item.lat,
@@ -658,7 +845,13 @@ function addAreaLayer(
   targetLayer.addTo(map)
 }
 
-function addLineLayer(targetLayer: L.LayerGroup, targetLabels: DomLabel[], lines: LineItem[]) {
+function addLineLayer(
+  targetLayer: L.LayerGroup,
+  targetLabels: DomLabel[],
+  lines: LineItem[],
+  labelClassName = 'strait-label-dom',
+  infoType = '线状要素',
+) {
   if (!map) return
 
   targetLayer.clearLayers()
@@ -672,7 +865,7 @@ function addLineLayer(targetLayer: L.LayerGroup, targetLabels: DomLabel[], lines
       dashArray: item.dashArray || '',
     }).addTo(targetLayer)
 
-    bindInfoPopup(line, item.name, item.desc)
+    bindInfoPopup(line, item.name, item.desc, infoType)
 
     const midIndex = Math.floor(item.path.length / 2)
     const midPoint = item.path[midIndex]
@@ -682,9 +875,9 @@ function addLineLayer(targetLayer: L.LayerGroup, targetLabels: DomLabel[], lines
         lat: midPoint[0],
         lng: midPoint[1],
         content: item.name,
-        className: 'strait-label-dom',
-        offsetX: 0,
-        offsetY: -10,
+        className: labelClassName,
+        offsetX: 10,
+        offsetY: -20,
       })
 
       if (label) targetLabels.push(label)
@@ -697,15 +890,36 @@ function addLineLayer(targetLayer: L.LayerGroup, targetLabels: DomLabel[], lines
 function refreshMapLayers() {
   if (!map) return
 
+  if (showRegions.value) {
+    addAreaLayer(regionLayer, regionLabels, regionAreas, 'region-label-dom', '#10b981', 0.12, '组成范围')
+  } else {
+    regionLayer.clearLayers()
+    clearDomLabels(regionLabels)
+  }
+
+  if (showLatitudeLines.value) {
+    addLineLayer(latitudeLineLayer, latitudeLineLabels, latitudeLines, 'latitude-label-dom', '重要纬线')
+  } else {
+    latitudeLineLayer.clearLayers()
+    clearDomLabels(latitudeLineLabels)
+  }
+
+  if (showCrossroad.value) {
+    addAreaLayer(crossroadLayer, crossroadLabels, crossroadAreas, 'crossroad-label-dom', '#f59e0b', 0.22, '东方十字路口')
+  } else {
+    crossroadLayer.clearLayers()
+    clearDomLabels(crossroadLabels)
+  }
+
   if (showSeaAreas.value) {
-    addAreaLayer(seaAreaLayer, seaAreaLabels, seaAreas, 'sea-label-dom', '#0ea5e9', 0.12)
+    addAreaLayer(seaAreaLayer, seaAreaLabels, seaAreas, 'sea-label-dom', '#0ea5e9', 0.12, '重要海域')
   } else {
     seaAreaLayer.clearLayers()
     clearDomLabels(seaAreaLabels)
   }
 
   if (showStrait.value) {
-    addLineLayer(straitLayer, straitLabels, straitLines)
+    addLineLayer(straitLayer, straitLabels, straitLines, 'strait-label-dom', '重要海峡')
   } else {
     straitLayer.clearLayers()
     clearDomLabels(straitLabels)
@@ -720,12 +934,21 @@ function cleanupMapLayers() {
   clearBoundaryLayer()
   clearCountryLayer()
 
+  regionLayer.clearLayers()
+  latitudeLineLayer.clearLayers()
+  crossroadLayer.clearLayers()
   seaAreaLayer.clearLayers()
   straitLayer.clearLayers()
 
+  if (map.hasLayer(regionLayer)) regionLayer.removeFrom(map)
+  if (map.hasLayer(latitudeLineLayer)) latitudeLineLayer.removeFrom(map)
+  if (map.hasLayer(crossroadLayer)) crossroadLayer.removeFrom(map)
   if (map.hasLayer(seaAreaLayer)) seaAreaLayer.removeFrom(map)
   if (map.hasLayer(straitLayer)) straitLayer.removeFrom(map)
 
+  clearDomLabels(regionLabels)
+  clearDomLabels(latitudeLineLabels)
+  clearDomLabels(crossroadLabels)
   clearDomLabels(seaAreaLabels)
   clearDomLabels(straitLabels)
 }
@@ -735,7 +958,7 @@ onMounted(async () => {
     zoomControl: true,
     attributionControl: false,
     minZoom: 2,
-    maxZoom: 8,
+    maxZoom: 5,
     dragging: true,
     scrollWheelZoom: true,
     zoomAnimation: false,
@@ -1066,6 +1289,18 @@ onUnmounted(() => {
   line-height: 1.45;
 }
 
+.location-formula {
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #fff;
+  border-left: 3px solid #f59e0b;
+  color: #7c2d12;
+  font-size: 13px;
+  line-height: 1.55;
+  font-weight: 600;
+}
+
 .exam-list {
   margin: 0;
   padding-left: 18px;
@@ -1179,6 +1414,20 @@ onUnmounted(() => {
   border: 1px solid #0ea5e9;
 }
 
+.region-area {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid #10b981;
+}
+
+.crossroad-area {
+  background: rgba(245, 158, 11, 0.24);
+  border: 1px solid #f59e0b;
+}
+
+.latitude-line {
+  border-top: 2px dashed #ef4444;
+}
+
 :deep(.custom-map-label-pane) {
   position: absolute;
   left: 0;
@@ -1219,6 +1468,53 @@ onUnmounted(() => {
   user-select: none;
 }
 
+:deep(.region-label-dom) {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  font-weight: bold;
+  color: #047857;
+  background: rgba(236, 253, 245, 0.96);
+  border: 1px solid rgba(16, 185, 129, 0.72);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(15, 118, 110, 0.18);
+}
+
+:deep(.latitude-label-dom) {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: #991b1b;
+  background: rgba(254, 242, 242, 0.95);
+  border: 1px solid rgba(239, 68, 68, 0.6);
+  border-radius: 999px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+:deep(.crossroad-label-dom) {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: #b45309;
+  background: rgba(255, 251, 235, 0.96);
+  border: 1px solid rgba(245, 158, 11, 0.72);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.16);
+}
+
 :deep(.geo-boundary-label-dom),
 :deep(.geo-country-label-dom) {
   position: absolute;
@@ -1233,5 +1529,158 @@ onUnmounted(() => {
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
+}
+
+.position-card-06 {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.position-card-07 {
+  background: #f0fdfa;
+  border-color: rgba(20, 184, 166, 0.32);
+}
+
+.position-card-06 .position-card-header {
+  color: #334155;
+}
+
+.position-card-07 .position-card-header {
+  color: #0f766e;
+}
+
+.position-card-06 .iconfont {
+  color: #334155;
+}
+
+.position-card-07 .iconfont {
+  color: #0f766e;
+}
+
+.answer-method {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.method-title {
+  font-weight: bold;
+  color: #334155;
+  margin-bottom: 10px;
+}
+
+.method-step {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.method-step:last-child {
+  border-bottom: 0;
+}
+
+.method-step span {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.method-step strong {
+  color: #334155;
+}
+
+.method-step p {
+  margin: 4px 0 0;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.task-list {
+  display: grid;
+  gap: 8px;
+}
+
+.task-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 8px;
+  align-items: start;
+  background: #fff;
+  border-radius: 8px;
+  padding: 9px 10px;
+  border: 1px solid rgba(20, 184, 166, 0.22);
+}
+
+.task-item span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  border-radius: 999px;
+  background: #ccfbf1;
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.task-item p {
+  margin: 0;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.focus-card {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 1000;
+  width: 310px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 2px 10px rgba(15, 39, 72, 0.16);
+  border-left: 4px solid var(--primary-color);
+}
+
+.focus-card-empty {
+  border-left-color: #94a3b8;
+}
+
+.focus-title {
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.focus-card-empty .focus-title {
+  color: #334155;
+}
+
+.focus-type {
+  font-size: 12px;
+  color: #0369a1;
+  margin-bottom: 4px;
+}
+
+.focus-card-empty .focus-type {
+  color: #64748b;
+}
+
+.focus-desc {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.45;
 }
 </style>

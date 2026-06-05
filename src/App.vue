@@ -75,48 +75,56 @@ import Cover from './components/cover.vue'
 import Position from './components/position.vue'
 import compose from './components/compose.vue'
 import Terrain from './components/terrain.vue'
-import Oil from './components/oil.vue'
-import Water from './components/water.vue'
 import Agriculture from './components/agriculture.vue'
-import Culture from './components/culture.vue'
-import Sustainable from './components/sustainable.vue'
-import Hotspot from './components/hotspot.vue'
 import Summary from './components/summary.vue'
-import Population from './components/population.vue'
 import Climate from './components/climate.vue'
 import Strait from './components/strait.vue'
+import Cities from './components/cities.vue'
+import Tourism from './components/tourism.vue'
+import Cooperation from './components/cooperation.vue'
+import Sustainable from './components/sustainable.vue'
+import IndustryTransport from './components/industryTransport.vue'
 
 // 组件映射
 const components = {
   cover: Cover,
-  compose: compose,
   position: Position,
+  compose: compose,
   terrain: Terrain,
   climate: Climate,
   agriculture: Agriculture,
+  cities: Cities,
   strait: Strait,
-  oil: Oil,
-  water: Water,
-  culture: Culture,
+  industryTransport: IndustryTransport,
+  tourism: Tourism,
+  cooperation: Cooperation,
   sustainable: Sustainable,
-  population: Population,
-  hotspot: Hotspot,
   summary: Summary,
 }
 
 const pptPages = [
-  { key: 'cover', index: 1, title: '课程封面', desc: '走进东南亚' },
-  { key: 'position', index: 2, title: '位置与范围', desc: '东方十字路口' },
-  { key: 'compose', index: 3, title: '组成与国家', desc: '中南半岛与马来群岛' },
-  { key: 'terrain', index: 4, title: '地形与河流', desc: '山河相间，纵列分布' },
-  { key: 'climate', index: 5, title: '热带气候', desc: '全年高温，降水丰富' },
-  { key: 'agriculture', index: 6, title: '水稻与热带作物', desc: '湿热环境下的农业' },
-  { key: 'strait', index: 7, title: '马六甲海峡', desc: '世界重要海上通道' },
-  { key: 'cities', index: 8, title: '城市与人口分布', desc: '沿河沿海分布明显' },
-  { key: 'tourism', index: 9, title: '旅游资源丰富', desc: '海岛风光与多元文化' },
-  { key: 'cooperation', index: 10, title: '区域联系与发展', desc: '中国与东盟合作' },
-  { key: 'summary', index: 11, title: '课堂小结', desc: '区域特征综合归纳' },
-]
+  { key: 'cover', title: '课程封面', desc: '走进东南亚' },
+  { key: 'position', title: '位置与范围', desc: '东方十字路口' },
+  { key: 'compose', title: '组成与国家', desc: '中南半岛与马来群岛' },
+  { key: 'terrain', title: '地形与河流', desc: '山河相间，纵列分布' },
+  { key: 'climate', title: '热带气候', desc: '全年高温，降水丰富' },
+  { key: 'agriculture', title: '水稻与热带作物', desc: '湿热环境下的农业' },
+  { key: 'strait', title: '马六甲海峡', desc: '世界重要海上通道' },
+
+  // 新增这一章
+  { key: 'industryTransport', title: '工业与交通', desc: '产业布局与泛亚铁路' },
+
+  { key: 'cities', title: '城市与人口分布', desc: '沿河沿海分布明显' },
+  { key: 'tourism', title: '旅游资源丰富', desc: '海岛风光与多元文化' },
+  { key: 'cooperation', title: '区域联系与发展', desc: '中国与东盟合作' },
+  { key: 'sustainable', title: '生态保护与可持续发展', desc: '热带环境下的发展选择' },
+  { key: 'summary', title: '课堂小结', desc: '区域特征综合归纳' },
+].map((item, index) => {
+  return {
+    ...item,
+    index: index + 1,
+  }
+})
 
 const currentKey = ref('cover')
 const showThumbPopup = ref(false)
