@@ -17,19 +17,27 @@
         </div>
       </div>
 
-      <p class="cover-desc">从“东方十字路口”的位置出发，认识中南半岛与马来群岛， 理解热带气候、水稻农业、马六甲海峡、城市人口分布与区域合作。</p>
+      <p class="cover-desc">
+        从“东方十字路口”的位置出发，认识中南半岛与马来群岛，理解热带气候、水稻农业、马六甲海峡、
+        工业与交通、泛亚铁路、城市人口分布、区域合作与生态保护。
+      </p>
 
       <div class="cover-tag">
         <span>位置与范围</span>
+        <span>组成与国家</span>
         <span>中南半岛</span>
         <span>马来群岛</span>
+        <span>地形河流</span>
         <span>热带气候</span>
         <span>水稻农业</span>
         <span>热带作物</span>
         <span>马六甲海峡</span>
+        <span>工业与交通</span>
+        <span>泛亚铁路</span>
         <span>城市人口</span>
         <span>旅游资源</span>
-        <span>东盟合作</span>
+        <span>区域合作</span>
+        <span>生态保护</span>
       </div>
 
       <div class="cover-info">
@@ -45,17 +53,17 @@
 
         <div class="info-card">
           <div class="info-value">湿热</div>
-          <div class="info-label">热带气候广布，全年高温</div>
+          <div class="info-label">热带气候广布，适合水稻与热带作物</div>
         </div>
 
         <div class="info-card">
-          <div class="info-value">通道</div>
-          <div class="info-label">马六甲海峡交通地位突出</div>
+          <div class="info-value">陆海</div>
+          <div class="info-label">马六甲海峡与泛亚铁路共同强化联系</div>
         </div>
       </div>
 
       <div class="cover-bottom">
-        <span>区域认知 · 综合思维 · 人地协调观</span>
+        <span>区域认知 · 综合思维 · 人地协调观 · 地理实践力</span>
         <span>Geography Courseware</span>
       </div>
     </div>
@@ -66,6 +74,7 @@
       <div class="decor-list">
         <span>China Sea</span>
         <span>Malacca Strait</span>
+        <span>Pan-Asia Railway</span>
         <span>Indian Ocean</span>
       </div>
     </div>
@@ -188,7 +197,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: clamp(7px, 0.8vw, 10px);
-  max-width: 900px;
+  max-width: 940px;
   margin-bottom: clamp(16px, 2vw, 24px);
 
   > span {
@@ -403,7 +412,7 @@
 }
 
 @media (max-height: 600px) {
-  .cover-tag > span:nth-child(n + 7) {
+  .cover-tag > span:nth-child(n + 11) {
     display: none;
   }
 
