@@ -1132,23 +1132,19 @@ function clearPlateBoundaryLayer() {
   clearDomLabels(plateBoundaryLabels)
 }
 
+function toggleRiverLayer() {
+  if (showRiverLayer.value) {
+    loadRiverLayer()
+  } else {
+    clearRiverLayer()
+  }
+}
+
 function togglePlateBoundaryLayer() {
   if (showPlateBoundaryLayer.value) {
     loadPlateBoundaryLayer()
   } else {
     clearPlateBoundaryLayer()
-  }
-}
-
-function toggleRiverLayer() {
-  if (showRiverLayer.value) {
-    loadRiverLayer()
-  }
-
-  if (showPlateBoundaryLayer.value) {
-    loadPlateBoundaryLayer()
-  } else {
-    clearRiverLayer()
   }
 }
 
