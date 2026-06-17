@@ -380,10 +380,7 @@
         <div class="map-focus-card map-focus-card-empty" v-else>
           <div class="focus-title">地图互动提示</div>
           <div class="focus-group">点击地图要素查看说明</div>
-          <div class="focus-desc">
-            可点击主要河流、全球六大板块分界线、山河相间示意线、主要三角洲和主要城市，左下角会显示对应地形知识点；板块名称读取 GeoJSON 中的
-            labelText。
-          </div>
+          <div class="focus-desc">可点击主要河流、全球六大板块分界线、山河相间示意线、主要三角洲和主要城市，左下角会显示对应地形知识点</div>
         </div>
       </div>
     </div>
